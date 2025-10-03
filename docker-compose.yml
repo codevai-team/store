@@ -1,0 +1,34 @@
+services:
+  store-admin:
+    build:
+      context: ./store-admin
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+    networks:
+      - store-network
+
+  store-client:
+    build:
+      context: ./store-client
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    restart: unless-stopped
+    networks:
+      - store-network
+
+networks:
+  store-network:
+    driver: bridge
